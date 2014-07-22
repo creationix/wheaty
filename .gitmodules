@@ -28,3 +28,13 @@
 	ref = refs/heads/master
 	prefix = hxxoyqca-879k58
 	path = node_modules/pathjoin
+[submodule "node_modules/gen-run"]
+	url = git@github.com:creationix/gen-run.git
+	ref = refs/heads/master
+	prefix = hxxp60p1-133q490
+	path = node_modules/gen-run
+[submodule "node_modules/simple-mime"]
+	url = git@github.com:creationix/simple-mime.git
+	ref = refs/heads/master
+	prefix = hxxrj6b1-15iopjn
+	path = node_modules/simple-mime
