@@ -1,0 +1,30 @@
+[submodule "node_modules/js-git"]
+	url = git@github.com:creationix/js-git.git
+	ref = refs/heads/master
+	prefix = hxxoud1j-s4nzbl
+	path = node_modules/js-git
+[submodule "node_modules/git-node-fs"]
+	url = git@github.com:creationix/git-node-fs.git
+	ref = refs/heads/master
+	prefix = hxxovgym-u0yqp5
+	path = node_modules/git-node-fs
+[submodule "node_modules/bodec"]
+	url = git@github.com:creationix/bodec.git
+	ref = refs/heads/master
+	prefix = hxxoxynd-q406d5
+	path = node_modules/bodec
+[submodule "node_modules/pako"]
+	url = git@github.com:nodeca/pako.git
+	ref = refs/heads/master
+	prefix = hxxoy9r5-ipaor8
+	path = node_modules/pako
+[submodule "node_modules/git-sha1"]
+	url = git@github.com:creationix/git-sha1.git
+	ref = refs/heads/master
+	prefix = hxxoyjii-es3e2b
+	path = node_modules/git-sha1
+[submodule "node_modules/pathjoin"]
+	url = git@github.com:creationix/pathjoin.git
+	ref = refs/heads/master
+	prefix = hxxoyqca-879k58
+	path = node_modules/pathjoin
