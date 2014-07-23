@@ -129,14 +129,10 @@ function* render(load, url) {
     }
     // Load the actual tree listing, this should be cached by mem-cache.
     var tree = yield repo.loadAs("tree", meta.hash);
-    // First look for a dynamic index file
-    if (tree["index.html.js"] && tree["index.html.js"].mode === modes.exec) {
-      console.log("Dynamic index");
-      throw new Error("TODO: Impement dynamic index");
-    }
-    // Then look for a static index file
+    // Look for a index file
     if (tree["index.html"] && modes.isFile(tree["index.html"].mode)) {
-      meta = yield repo.loadAs("blob", tree["index.html"].hash);
+      meta = tree["index.html"];
+      url = pathJoin(url, "index.html");
       // Fall through down to static file handler.
     }
     // Otherwise render a index file
@@ -146,6 +142,11 @@ function* render(load, url) {
         "Content-Type": "text/html",
       }, bodec.fromUnicode(formatTree(tree))];
     }
+  }
+
+  if (meta.mode === modes.exec) {
+    console.log(url);
+    throw new Error("TODO: Impement dynamic file");
   }
 
   // Render static files.
