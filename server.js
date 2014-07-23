@@ -84,9 +84,6 @@ function* handleRequest(req) {
     var headers = result[1];
     if (bodec.isBinary(result[2])) {
 
-      if (!headers.ETag) {
-        headers.ETag = '"' + sha1(result[2]) + '"';
-      }
       // Auto deflate text files if request accepts it.
       if (/\b(?:text|javascript)\b/.test(headers["Content-Type"]) &&
           /\bgzip\b/.test(req.headers["accept-encoding"])) {
@@ -119,6 +116,9 @@ function* execute(root, code, url) {
   }
   var result = yield* render(load, url);
   if (result) {
+    if (!result[1].ETag && bodec.isBinary(result[2])) {
+      result[1].ETag = '"' + sha1(result[2]) + '"';
+    }
     recording.headers = result[1];
     records[url] = recording;
   }
