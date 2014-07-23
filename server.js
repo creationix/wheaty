@@ -17,6 +17,10 @@ require('js-git/mixins/read-combiner')(repo);
 require('js-git/mixins/mem-cache')(repo);
 require('js-git/mixins/formats')(repo);
 
+var runtimes = {
+  jackl: require('./jackl'),
+};
+
 var server = http.createServer(function (req, res) {
   run(handleRequest(req), function (err, result) {
     if (err) {
@@ -25,7 +29,7 @@ var server = http.createServer(function (req, res) {
     }
     if (!result) {
       res.statusCode = 404;
-      return res.end();
+      return res.end("Not found: " + req.url);
     }
     console.log(result);
     res.writeHead(result[0], result[1]);
@@ -79,6 +83,10 @@ function* handleRequest(req) {
   if (result) {
     var headers = result[1];
     if (bodec.isBinary(result[2])) {
+
+      if (!headers.ETag) {
+        headers.ETag = '"' + sha1(result[2]) + '"';
+      }
       // Auto deflate text files if request accepts it.
       if (/\b(?:text|javascript)\b/.test(headers["Content-Type"]) &&
           /\bgzip\b/.test(req.headers["accept-encoding"])) {
@@ -106,7 +114,7 @@ function* execute(root, code, url) {
 
   function* load(path) {
     var meta = yield repo.pathToEntry(root, path);
-    recording.paths[path] = meta.hash;
+    if (meta) recording.paths[path] = meta.hash;
     return meta;
   }
   var result = yield* render(load, url);
@@ -120,7 +128,7 @@ function* execute(root, code, url) {
 function* render(load, url) {
 
   var meta = yield* load(url);
-
+  if (!meta) return;
   // Special rules for tree requests.
   if (meta.mode === modes.tree) {
     // Make sure requests for trees end in trailing slashes.
@@ -144,17 +152,33 @@ function* render(load, url) {
     }
   }
 
-  if (meta.mode === modes.exec) {
-    console.log(url);
-    throw new Error("TODO: Impement dynamic file");
-  }
-
-  // Render static files.
   if (modes.isFile(meta.mode)) {
+    var body = yield repo.loadAs("blob", meta.hash);
+
+    if (meta.mode === modes.exec) {
+      // #! but not #!/
+      if (body[0] === 0x23 && body[1] === 0x21 && body[2] !== 0x2f) {
+        var i = 2;
+        var language = "";
+        while (i < body.length && body[i] !== 0x0a) {
+          language += String.fromCharCode(body[i++]);
+        }
+        var runtime = runtimes[language];
+        if (runtime) {
+          body = bodec.slice(body, i);
+          if (runtime.constructor === Function) {
+            return runtime(load, url, body);
+          }
+          return yield* runtime(load, url, body);
+        }
+      }
+    }
+
+    // Render static files.
     return [200, {
       "ETag": '"' + meta.hash + '"',
       "Content-Type": getMime(url),
-    }, yield repo.loadAs("blob", meta.hash)];
+    }, body];
   }
 }
 
