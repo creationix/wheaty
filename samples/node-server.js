@@ -34,8 +34,7 @@ var server = http.createServer(function (req, res) {
     else if (!result) result = [404, {}, "Not found: " + req.url + "\n"];
     console.log(req.method, req.url, result[0]);
     res.writeHead(result[0], result[1]);
-    if (result[2]) res.end(result[2]);
-    else res.end();
+    res.end(result[2]);
   });
 });
 
