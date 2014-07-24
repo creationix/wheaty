@@ -1,10 +1,15 @@
 "use strict";
-var deflate = require('pako').deflate;
 var pathJoin = require('path').join;
 var sha1 = require('git-sha1');
 var modes = require('js-git/lib/modes');
 var getMime = require('simple-mime')("application/octet-stream");
 var bodec = require('bodec');
+var pako = require('pako');
+var deflate = bodec.Binary === Buffer ? function (data) {
+  if (bodec.Binary === Buffer) {
+    return new Buffer(pako.deflate(new Uint8Array(data)));
+  }
+} : pako.deflate;
 
 // `pathToEntry*(path) -> {mode,hash,repo}` provides the interface to the underlying js-git vfs
 // `runtimes` is a hash of runtimes.  Key is name like "js" and value is function* (load, url, code)
