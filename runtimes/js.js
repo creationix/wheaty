@@ -42,9 +42,12 @@ module.exports = function* (load, url, code) {
     return sandbox.module.exports;
 
     function localRequire(path) {
-      var dep = pathJoin(dirname, path);
-      if (!/\.js$/.test(dep)) dep += ".js";
-      return globalRequire(dep);
+      if (path[0] === ".") {
+        path = pathJoin(dirname, path);
+        if (!/\.js$/.test(path)) path += ".js";
+        return globalRequire(path);
+      }
+      return require(path);
     }
   }
 
@@ -64,7 +67,8 @@ module.exports = function* (load, url, code) {
     var deps = mine(code);
     for (var i = 0, l = deps.length; i < l; i++) {
       var name = deps[i].name;
-      var dep = name[0] === "." ? pathJoin(url, "..", name) : name;
+      if (name[0] !== ".") continue;
+      var dep = pathJoin(url, "..", name);
       if (!/\.js$/.test(dep)) dep += ".js";
       yield* prep(dep);
     }

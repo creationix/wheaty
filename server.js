@@ -32,7 +32,7 @@ var server = http.createServer(function (req, res) {
       res.statusCode = 404;
       return res.end("Not found: " + req.url);
     }
-    console.log(result);
+    // console.log(result);
     res.writeHead(result[0], result[1]);
     res.end(result[2]);
   });
@@ -43,12 +43,17 @@ server.listen(8080, function () {
 });
 
 var records = {};
-
+var head, root, rootTime;
 function* handleRequest(req) {
-  var head = yield repo.readRef("refs/heads/master");
-  if (!head) throw new Error("Missing head in repo");
-  var commit = yield repo.loadAs("commit", head);
-  var root = commit.tree;
+
+  var now = Date.now();
+  if (!root || ((now - rootTime) > 1000)) {
+    rootTime = now;
+    head = yield repo.readRef("refs/heads/master");
+    if (!head) throw new Error("Missing head in repo");
+    var commit = yield repo.loadAs("commit", head);
+    root = commit.tree;
+  }
 
   var url = urlParse(req.url).pathname;
   var code = sha1(render.toString());
