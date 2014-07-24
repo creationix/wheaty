@@ -11,7 +11,7 @@ var getMime = require('simple-mime')("application/octet-stream");
 var bodec = require('bodec');
 
 var repo = {};
-require('git-node-fs/mixins/fs-db')(repo, pathResolve(__dirname, process.argv[2]));
+require('git-node-fs/mixins/fs-db')(repo, pathResolve(process.cwd(), process.argv[2]));
 require('js-git/mixins/path-to-entry')(repo);
 require('js-git/mixins/read-combiner')(repo);
 require('js-git/mixins/mem-cache')(repo);
