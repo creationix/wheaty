@@ -1,8 +1,6 @@
 "use strict";
 var bodec = require('bodec');
 var mine = require('mine');
-var inspect = require('util').inspect;
-var ansiToHtml = require('./ansi-to-html');
 var pathJoin = require('pathjoin');
 var vm = require('vm');
 
