@@ -18,7 +18,6 @@ function* pathToEntry(url) {
   var root = commit.tree;
   var meta = yield repo.pathToEntry(root, url);
   if (meta) meta.repo = repo;
-  console.log(url, meta);
   return meta;
 }
 
