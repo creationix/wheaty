@@ -1,4 +1,4 @@
-wheaty
+Wheaty
 ======
 
-New version of the wheat blog engine based on js-git
+JS-Git based application hosting platform
