@@ -40,6 +40,6 @@ var server = http.createServer(function (req, res) {
   });
 });
 
-server.listen(8080, function () {
-  console.log("Wheaty server listening at http://localhost:8080/");
+server.listen(process.env.PORT || 8000, function () {
+  console.log("Wheaty server listening at http://localhost:%s/", server.address().port);
 });
