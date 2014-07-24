@@ -38,3 +38,8 @@
 	ref = refs/heads/master
 	prefix = hxxrj6b1-15iopjn
 	path = node_modules/simple-mime
+[submodule "node_modules/mine"]
+	url = git@github.com:creationix/mine.git
+	ref = refs/heads/master
+	prefix = hxz78n0d-s2r7tu
+	path = node_modules/mine

@@ -18,7 +18,8 @@ require('js-git/mixins/mem-cache')(repo);
 require('js-git/mixins/formats')(repo);
 
 var runtimes = {
-  jackl: require('./jackl'),
+  jackl: require('./runtimes/jackl'),
+  js: require('./runtimes/js'),
 };
 
 var server = http.createServer(function (req, res) {
@@ -111,11 +112,17 @@ function* execute(root, code, url) {
 
   function* load(path) {
     var meta = yield repo.pathToEntry(root, path);
-    if (meta) recording.paths[path] = meta.hash;
+    if (meta) {
+      recording.paths[path] = meta.hash;
+      meta.repo = repo;
+    }
     return meta;
   }
   var result = yield* render(load, url);
   if (result) {
+    if (typeof result[2] === "string") {
+      result[2] = bodec.fromUnicode(result[2]);
+    }
     if (!result[1].ETag && bodec.isBinary(result[2])) {
       result[1].ETag = '"' + sha1(result[2]) + '"';
     }
@@ -160,17 +167,18 @@ function* render(load, url) {
       if (body[0] === 0x23 && body[1] === 0x21 && body[2] !== 0x2f) {
         var i = 2;
         var language = "";
-        while (i < body.length && body[i] !== 0x0a) {
+        while (i < body.length && body[i] !== 0x0d && body[i] !== 0x0a) {
           language += String.fromCharCode(body[i++]);
         }
         var runtime = runtimes[language];
-        if (runtime) {
-          body = bodec.slice(body, i);
-          if (runtime.constructor === Function) {
-            return runtime(load, url, body);
-          }
-          return yield* runtime(load, url, body);
+        if (!runtime) {
+          throw new Error("Invalid runtime specified: " + JSON.stringify(language));
         }
+        body = bodec.slice(body, i);
+        if (runtime.constructor === Function) {
+          return runtime(load, url, body);
+        }
+        return yield* runtime(load, url, body);
       }
     }
 
