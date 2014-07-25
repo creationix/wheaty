@@ -43,3 +43,13 @@
 	ref = refs/heads/master
 	prefix = hxz78n0d-s2r7tu
 	path = node_modules/mine
+[submodule "node_modules/culvert"]
+	url = git@github.com:creationix/culvert.git
+	ref = refs/heads/master
+	prefix = hy0n5qlb-1lp91ew
+	path = node_modules/culvert
+[submodule "node_modules/wheaty-js-runtime"]
+	url = git@github.com:creationix/wheaty-js-runtime.git
+	ref = refs/heads/master
+	prefix = hy0rfhwr-avwws0
+	path = node_modules/wheaty-js-runtime

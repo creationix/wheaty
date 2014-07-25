@@ -119,7 +119,7 @@ function* render(pathToEntry, url, runtimes) {
   if (meta.mode === modes.sym) {
     var target = yield repo.loadAs("blob", meta.hash);
     target = bodec.toUnicode(target);
-    if (target[0] === ".") target = pathJoin(url, "..", target);
+    if (target[0] !== "/") target = pathJoin(url, "..", target);
     return yield* render(pathToEntry, target, runtimes);
   }
 
