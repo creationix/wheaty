@@ -8,6 +8,9 @@ var pathResolve = require('path').resolve;
 var makePathToEntry = require('../lib/node-vfs');
 
 var url = process.argv[2];
+if (!/(?:@|:\/\/)/.test(url)) {
+  url = pathResolve(process.cwd(), url);
+}
 var root = process.argv[3];
 var ref = process.env.REF || "refs/heads/master";
 var port = process.env.PORT || 8080;
@@ -19,7 +22,7 @@ var handler;
 var server = http.createServer(function (req, res) {
   run(function* () {
     if (!handler) {
-      var pathToEntry = yield* makePathToEntry(url, ref, root, cacheDir);
+      var pathToEntry = yield* makePathToEntry(url, ref, cacheDir, root);
       handler = wheaty(pathToEntry, runtimes);
     }
     return yield* handler(req.url, req.headers);
