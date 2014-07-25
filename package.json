@@ -1,6 +1,6 @@
 {
   "name": "wheaty",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "JS-Git based application hosting platform",
   "main": "wheaty.js",
   "bin": {
@@ -28,6 +28,7 @@
     "bodec": "^0.1.0",
     "culvert": "^0.1.2",
     "gen-run": "^0.1.2",
+    "git-node-fs": "^0.1.0",
     "git-sha1": "^0.1.2",
     "js-git": "^0.7.5",
     "pako": "^0.2.5",
