@@ -13,7 +13,7 @@ The easiest way to use this is with the `wheaty` CLI tool.  To install this, sim
 
 Then when you want to test a site, just launch it by git url or path to local bare git repo.
 
-(Hint, the [tedit chrome app](https://chrome.google.com/webstore/detail/tedit-development-environ/ooekdijbnbbjdfjocaiflnjgoohnblgf) can edit bare repos off the local hard-disk)
+(Hint, the [tedit chrome app](https://chrome.google.com/webstore/detail/tedit-development-environ/ooekdijbnbbjdfjocaiflnjgoohnblgf) can edit bare repos on the local hard-disk)
 
 ```sh
 > wheaty git://github.com/creationix/creationix.com.git
