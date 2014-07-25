@@ -33,9 +33,7 @@ If you want a custom prefix inside the repo, pass it as the second argument.
 The `wheaty-group` tool can be used to create an instant git based PaaS.  Most the
 creationix.com family of sites are running using this on a Rackspace server.
 
-My production configs were at the time of writing:
-
-Production Sites:
+My production configs were at the time of writing are:
 
 ```js
 var pathJoin = require('path').join;
@@ -65,7 +63,7 @@ module.exports = {
 };
 ```
 
-Test Sites:
+And my play sites are:
 
 ```js
 var pathJoin = require('path').join;
