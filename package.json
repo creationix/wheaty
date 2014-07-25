@@ -1,10 +1,11 @@
 {
   "name": "wheaty",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "description": "JS-Git based application hosting platform",
   "main": "wheaty.js",
   "bin": {
-    "wheaty-group": "./bin/wheaty-group.js"
+    "wheaty-group": "./bin/wheaty-group.js",
+    "wheaty": "./bin/wheaty.js"
   },
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
@@ -22,5 +23,15 @@
   "bugs": {
     "url": "https://github.com/creationix/wheaty/issues"
   },
-  "homepage": "https://github.com/creationix/wheaty"
+  "homepage": "https://github.com/creationix/wheaty",
+  "dependencies": {
+    "bodec": "^0.1.0",
+    "culvert": "^0.1.2",
+    "gen-run": "^0.1.2",
+    "git-sha1": "^0.1.2",
+    "js-git": "^0.7.5",
+    "pako": "^0.2.5",
+    "simple-mime": "^0.1.0",
+    "wheaty-js-runtime": "^0.1.0"
+  }
 }
