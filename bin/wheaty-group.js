@@ -18,6 +18,17 @@ var pathResolve = require('path').resolve;
 
 var sitesConfig = require(pathResolve(process.cwd(), process.argv[2]));
 
+if (!process.getuid()) {
+  if (sitesConfig.group) {
+    console.log("Changing group to", sitesConfig.group);
+    process.setgid(sitesConfig.group);
+  }
+  if (sitesConfig.user) {
+    console.log("Changing user to", sitesConfig.user);
+    process.setuid(sitesConfig.user);
+  }
+}
+
 var queues = {};
 var repos = {};
 
