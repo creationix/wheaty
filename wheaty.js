@@ -116,11 +116,12 @@ function* render(pathToEntry, url, runtimes) {
   if (!meta) return;
   var repo = meta.repo;
 
+  // Send redirects for symlinks
   if (meta.mode === modes.sym) {
     var target = yield repo.loadAs("blob", meta.hash);
     target = bodec.toUnicode(target);
     if (target[0] !== "/") target = pathJoin(url, "..", target);
-    return yield* render(pathToEntry, target, runtimes);
+    return [302, {Location: target}];
   }
 
   // Special rules for tree requests.

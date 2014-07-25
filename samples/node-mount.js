@@ -148,38 +148,35 @@ var sites = {};
 function makePathToEntry(baseRepo, baseRef) {
   baseRef = baseRef || "refs/heads/master";
   return function* pathToEntry(path) {
-    console.log("pathToEntry", path);
     var repo = baseRepo;
     var ref = baseRef;
     var base = "";
     path = path.split("/").filter(Boolean).join("/");
-    do {
-      console.log("loop", repo.rootPath, path)
+    while (true) {
       var commit = yield repo.loadAs("commit", yield repo.readRef(ref));
       var root = commit.tree;
       var meta = yield repo.pathToEntry(root, path);
+
       if (!meta) return;
-      // If the path was found, attach the repo and return it.
-      if (meta.mode) {
+      // If the path was a file or tree, attach the repo and return it.
+      if (meta.mode === modes.tree || modes.isFile(meta.mode)) {
         meta.repo = repo;
         return meta;
       }
-      // If the last known path was not a submodule, give up.
-      if (!meta.last) return;
-      var sub = meta.last;
-      if (sub.mode === modes.sym) {
-        var target = bodec.toUnicode(yield repo.loadAs("blob", sub.hash));
-        console.log({
-          target: target,
-          base: base,
-          sub: sub.path,
-          original: path
-        })
-        target = pathJoin(base, sub.path, '..', target, path.substring(sub.path.length + 1));
-        console.log("Jumping to", target);
+      // Normalize partial paths and final paths
+      var subPath = path;
+      var subRest = "";
+      if (meta.last) {
+        meta = meta.last;
+        subPath = meta.path;
+        subRest = meta.rest;
+      }
+
+      if (meta.mode === modes.sym) {
+        var target = bodec.toUnicode(yield repo.loadAs("blob", meta.hash));
+        target = pathJoin(base, subPath, '..', target, subRest);
         return yield* pathToEntry(target);
       }
-      if (sub.mode !== modes.commit) return;
 
       // Check for .gitmodules file
       meta = yield repo.pathToEntry(root, ".gitmodules");
@@ -190,18 +187,17 @@ function makePathToEntry(baseRepo, baseRef) {
       // Load and parse the .gitmodules file.
       // TODO: cache this in memory by path and hash
       var config = configCodec.decode(bodec.toUnicode(yield repo.loadAs("blob", meta.hash)));
-      config = config.submodule[sub.path];
+      config = config.submodule[subPath];
       if (!config) {
-        throw new Error("Missing .gitmodules entry for " + sub.path);
+        throw new Error("Missing .gitmodules entry for " + subPath);
       }
 
       // Iterate the search loop with the new repo and path.
       ref = config.ref || "refs/heads/master";
       repo = yield* getRepo(config.url, ref);
-      var done = path.substring(0, sub.path.length);
-      base = base ? pathJoin(base, done) : done;
-      path = path.substring(sub.path.length + 1);
-    } while (path);
+      base = subPath;
+      path = subRest;
+    }
   };
 }
 
