@@ -1,0 +1,26 @@
+{
+  "name": "wheaty",
+  "version": "0.0.1",
+  "description": "JS-Git based application hosting platform",
+  "main": "wheaty.js",
+  "bin": {
+    "wheaty-group": "./bin/wheaty-group.js"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git@github.com:creationix/wheaty.git"
+  },
+  "keywords": [
+    "js-git",
+    "wheaty"
+  ],
+  "author": "Tim Caswell <tim@creationix.com>",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/creationix/wheaty/issues"
+  },
+  "homepage": "https://github.com/creationix/wheaty"
+}

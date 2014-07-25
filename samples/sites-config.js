@@ -2,6 +2,7 @@ var pathJoin = require('pathjoin');
 var jsRuntime = require('wheaty-js-runtime');
 
 module.exports = {
+  port: 8080,
   cacheDir: pathJoin(__dirname, "../../git"),
   sites: {
     "conquest.localhost:8000": {
