@@ -6,6 +6,7 @@ var http = require('http');
 var run = require('gen-run');
 var pathResolve = require('path').resolve;
 var makePathToEntry = require('../lib/node-vfs');
+var wheatyVersion = require('../package.json').version;
 
 var url = process.argv[2];
 if (!/(?:@|:\/\/)/.test(url)) {
@@ -29,6 +30,7 @@ var server = http.createServer(function (req, res) {
     if (err) result = [500, {}, err.stack + "\n"];
     else if (!result) result = [404, {}, "Not found: " + req.url + "\n"];
     console.log(req.method, req.headers.host, req.url, result[0]);
+    result[1]["X-Wheaty-Version"] = wheatyVersion;
     res.writeHead(result[0], result[1]);
     res.end(result[2]);
   });
