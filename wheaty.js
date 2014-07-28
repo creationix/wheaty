@@ -106,11 +106,16 @@ module.exports = function (pathToEntry, runtimes) {
   }
 };
 
+function getPathname(url) {
+  // Strip of query string from url to get pathname.
+  var index = url.indexOf("?");
+  return index >= 0 ? url.substring(0, index) : url;
+}
+
 function* render(pathToEntry, url, runtimes) {
 
   // Strip of query string from url to get pathname.
-  var index = url.indexOf("?");
-  var pathname = index >= 0 ? url.substring(0, index) : url;
+  var pathname = getPathname(url);
 
   var meta = yield* pathToEntry(pathname);
   if (!meta) return;
@@ -280,7 +285,7 @@ function formatTree(tree, path) {
           icon = "icon-doc-text";
         }
         else {
-          var mime = getMime(name);
+          var mime = getMime(getPathname(url));
           if (/\bimage\b/.test(mime)) icon = "icon-file-image";
           else if (/\baudio\b/.test(mime)) icon = "icon-file-audio";
           else if (/\bvideo\b/.test(mime)) icon = "icon-file-video";
