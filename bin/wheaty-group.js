@@ -31,7 +31,7 @@ var server = http.createServer(function (req, res) {
     if (!handler) {
       var config = sitesConfig.sites[host];
       if (!config) return;
-      handler = sites[host] = wheaty(yield* makePathToEntry(config.url, config.ref, sitesConfig.cacheDir, config.root), config.runtimes);
+      handler = sites[host] = wheaty(yield* makePathToEntry(config.url, config.ref, sitesConfig.cacheDir), config.runtimes);
     }
     return yield* handler(req.url, req.headers);
   }, function (err, result) {

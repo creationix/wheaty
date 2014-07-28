@@ -22,12 +22,10 @@ Then when you want to test a site, just launch it by git url or path to local ba
 Then open your browser to <http://localhost:8080/> to see the site.
 
 You override the port with the `PORT` environment variable.
-The git branch can be changed with the `REF` environment variable.
-
-If you want a custom prefix inside the repo, pass it as the second argument.
+The git branch can be changed with an extra argument.
 
 ```sh
-> wheaty git://github.com/creationix/blog.git www
+> wheaty git://github.com/creationix/blog.git refs/tags/current
 ```
 
 ## Production Usage
