@@ -1,6 +1,6 @@
 {
   "name": "wheaty",
-  "version": "0.1.5",
+  "version": "0.1.6",
   "description": "JS-Git based application hosting platform",
   "main": "wheaty.js",
   "bin": {

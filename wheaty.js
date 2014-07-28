@@ -179,7 +179,7 @@ function* render(pathToEntry, url, runtimes) {
     // Render static files.
     return [200, {
       "ETag": '"' + meta.hash + '"',
-      "Content-Type": getMime(pathname),
+      "Content-Type": getMime(getPathname(url)),
     }, body];
   }
 }
@@ -285,7 +285,7 @@ function formatTree(tree, path) {
           icon = "icon-doc-text";
         }
         else {
-          var mime = getMime(getPathname(url));
+          var mime = getMime(name);
           if (/\bimage\b/.test(mime)) icon = "icon-file-image";
           else if (/\baudio\b/.test(mime)) icon = "icon-file-audio";
           else if (/\bvideo\b/.test(mime)) icon = "icon-file-video";
