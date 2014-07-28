@@ -174,7 +174,7 @@ function* render(pathToEntry, url, runtimes) {
     // Render static files.
     return [200, {
       "ETag": '"' + meta.hash + '"',
-      "Content-Type": getMime(url),
+      "Content-Type": getMime(pathname),
     }, body];
   }
 }
