@@ -141,7 +141,13 @@ function* render(pathToEntry, url, runtimes) {
     if (tree["index.html"] && modes.isFile(tree["index.html"].mode)) {
       meta = tree["index.html"];
       meta.repo = repo;
-      url = pathJoin(url, "index.html");
+      var index = url.indexOf("?");
+      if (index < 0) {
+        url = pathJoin(url, "index.html");
+      }
+      else {
+        url = pathJoin(url.substring(0, index), "index.html") + url.substring(index);
+      }
       // Fall through down to static file handler.
     }
     // Otherwise render a index file
