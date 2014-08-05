@@ -263,6 +263,7 @@ function formatTree(tree, path) {
     "  html { font: 14px/1.4 'Helvetica Neue', Helvetica, sans-serif; color: #657b83; font-weight: 400; }\n" +
     "  h2 { font-weight: 200; font-size: 45px; margin: 20px 35px; }\n" +
     "  table { background: #eee8d5; color: #586e75; padding: 20px 35px; }\n" +
+    "  td { white-space: nowrap; }\n" +
     "  p { margin-top: 15px; padding: 20px 35px; }\n" +
     "  .hash { font-family: menlo, monaco, Ubuntu Mono, monospace; }\n" +
     "  td { padding: 0 20px; line-height: 21px; }\n" +
