@@ -5,7 +5,7 @@ var wheaty = require('../wheaty');
 var http = require('http');
 var run = require('gen-run');
 var pathResolve = require('path').resolve;
-var makePathToEntry = require('../lib/node-vfs');
+var makePathToEntry = require('repo-farm/node-vfs');
 var wheatyVersion = require('../package.json').version;
 
 var url = process.argv[2];

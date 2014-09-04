@@ -1,6 +1,6 @@
 {
   "name": "wheaty",
-  "version": "0.2.2",
+  "version": "0.2.3",
   "description": "JS-Git based application hosting platform",
   "main": "wheaty.js",
   "bin": {
@@ -32,6 +32,7 @@
     "git-sha1": "^0.1.2",
     "js-git": "^0.7.7",
     "pako": "^0.2.5",
+    "repo-farm": "^1.0.0",
     "simple-mime": "^0.1.0",
     "wheaty-js-runtime": "^0.1.0"
   }
