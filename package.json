@@ -28,9 +28,9 @@
     "bodec": "^0.1.0",
     "culvert": "^0.1.2",
     "gen-run": "^0.1.2",
-    "git-node-fs": "^0.1.0",
+    "git-node-fs": "^1.0.0",
     "git-sha1": "^0.1.2",
-    "js-git": "^0.7.6",
+    "js-git": "^0.7.7",
     "pako": "^0.2.5",
     "simple-mime": "^0.1.0",
     "wheaty-js-runtime": "^0.1.0"
