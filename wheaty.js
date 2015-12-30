@@ -7,9 +7,9 @@ var bodec = require('bodec');
 var pako = require('pako');
 var deflate = bodec.Binary === Buffer ? function (data) {
   if (bodec.Binary === Buffer) {
-    return new Buffer(pako.deflate(new Uint8Array(data)));
+    return new Buffer(pako.deflateRaw(new Uint8Array(data)));
   }
-} : pako.deflate;
+} : pako.deflateRaw;
 
 // `pathToEntry*(path) -> {mode,hash,repo}` provides the interface to the underlying js-git vfs
 // `runtimes` is a hash of runtimes.  Key is name like "js" and value is function* (load, url, code)
